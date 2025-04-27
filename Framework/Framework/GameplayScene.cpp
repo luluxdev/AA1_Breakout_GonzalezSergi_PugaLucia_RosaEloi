@@ -33,6 +33,19 @@ void GameplayScene::OnEnter()
 void GameplayScene::Update()
 {
 	Scene::Update();
+
+	if (gameManager.attempts >= 3) {
+		
+		if (scenes["GameOver"])
+			delete scenes["GameOver"];
+
+		scenes["GameOver"] = new EndScene(rankingScene, "", gameManager.score, gameManager);
+
+		finished = true;
+		nextScene = "GameOver";
+
+	}
+
 }
 
 void GameplayScene::Render()

@@ -131,6 +131,7 @@
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="ConsoleControl.cpp" />
     <ClCompile Include="CreditsScene.cpp" />
+    <ClCompile Include="EndScene.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameplayScene.cpp" />
     <ClCompile Include="main.cpp" />
@@ -143,6 +144,7 @@
     <ClInclude Include="Brick.h" />
     <ClInclude Include="ConsoleControl.h" />
     <ClInclude Include="CreditsScene.h" />
+    <ClInclude Include="EndScene.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameplayScene.h" />

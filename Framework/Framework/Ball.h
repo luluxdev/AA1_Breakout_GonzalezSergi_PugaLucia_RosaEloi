@@ -1,9 +1,11 @@
 #pragma once
 #include "GameObject.h"
-#include "GameManager.h"
 #include "Wall.h"
 #include "Brick.h"
 #include "Pad.h"
+#include "GameManager.h"
+#include "Scene.h"
+#include "GameplayScene.h"
 
 #include <vector>
 

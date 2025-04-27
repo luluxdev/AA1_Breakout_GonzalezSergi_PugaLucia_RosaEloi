@@ -144,6 +144,7 @@ void Ball::Update()
     }
 
     if (outOfBounds) {
+        gameManager.Attempts();
         // Reiniciar posición de la pelota
         position = Vector2(5, 5); // Posición inicial
         direction = Vector2(1, 1); // Dirección inicial

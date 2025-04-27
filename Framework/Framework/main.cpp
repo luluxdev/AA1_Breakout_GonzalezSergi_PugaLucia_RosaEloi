@@ -26,8 +26,8 @@ int main(){
 	GameManager* gameManager = new GameManager();
 
 	//Create the scenes
-	scenes.emplace("Menu", new MenuScene());
-	scenes.emplace("Gameplay", new GameplayScene());
+	scenes.emplace("Menu", new MenuScene(scenes, gameManager, rankingScene));
+	scenes.emplace("Gameplay", new GameplayScene(*gameManager, scenes, rankingScene));
 	scenes.emplace("Ranking", rankingScene);
 	scenes.emplace("Credits", new CreditsScene());
 
