@@ -45,14 +45,39 @@ void Ball::Update()
         if (nextPos == go->GetPosition()) {
             if (Wall* w = dynamic_cast<Wall*>(go)) {
                 // Verificar si es el muro inferior (#)
-                if (go->GetPosition().y > position.y) { // Colisión por abajo
+                if (go->GetPosition().y > position.y && go->GetPosition().y < 2) { // Colisión por abajo
                     outOfBounds = true;
                     break;
                 }
-                // Rebote normal en otras paredes
-                direction.x = -direction.x;
-                collision = true;
-                break;
+                // Para todas las demás paredes (laterales y superior), solo rebotar
+                else {
+                    outOfBounds = false; // No se sale de los límites
+                    // Determinar si la colisión es principalmente horizontal o vertical
+                    int verify = go->GetPosition().y;
+                    bool isHorizontalCollision = (nextPos.x != position.x); // Colisión con pared lateral
+                    if (nextPos.y == 0) {
+                        direction.y = -direction.y; // Rebote vertical (techo)
+                    }
+                    else if (isHorizontalCollision) {
+                        direction.x = -direction.x; // Rebote horizontal
+                    }
+                    else {
+                        if (nextPos.y < position.y) {
+                            direction.y = -direction.y; // Rebote vertical (techo)
+                        }
+                        else if (nextPos.y > position.y) {
+                            direction.y = -direction.y; // Rebote vertical (suelo)
+                        }
+                        else if (nextPos.y == 0) {
+                            direction.y = -direction.y;
+                        }
+                    }
+                    if (nextPos.y == 14) {
+                        outOfBounds = true;
+                    }
+                    collision = true;
+                    break;
+                }
             }
         }
 
