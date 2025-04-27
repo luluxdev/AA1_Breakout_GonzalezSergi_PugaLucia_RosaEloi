@@ -7,7 +7,6 @@ public:
     int score;
     int multiplier;
     int attempts;
-    char name[];
 
 	// Constructor to initialize the game state:
     GameManager() {
