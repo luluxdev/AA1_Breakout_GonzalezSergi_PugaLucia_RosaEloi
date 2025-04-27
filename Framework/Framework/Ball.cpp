@@ -75,6 +75,12 @@ void Ball::Update()
                 }
                 gameManager.AddPoints();
                 collision = true;
+                for (auto it = objects.begin(); it != objects.end(); ++it) {
+                    if (*it == go) {
+                        objects.erase(it);
+                        break;
+                    }
+                }
                 break;
             }
         }
