@@ -114,6 +114,8 @@ void Ball::Update()
         if (Pad* p = dynamic_cast<Pad*>(go)) {
             Vector2 padPos = p->GetPosition();
             int padWidth = p->GetWidth();
+            gameManager.ResetMultiplier();
+
 
             if (nextPos.y == padPos.y &&
                 nextPos.x >= padPos.x - padWidth &&
@@ -130,7 +132,7 @@ void Ball::Update()
                     direction.x = 1;
                 }
                 else { // Golpe centro
-                    direction.x = (rand() % 2) ? 1 : -1;
+                    direction.x = 0;
                 }
 
                 // Mover la pelota fuera del área de colisión
@@ -146,8 +148,8 @@ void Ball::Update()
     if (outOfBounds) {
         gameManager.Attempts();
         // Reiniciar posición de la pelota
-        position = Vector2(5, 5); // Posición inicial
-        direction = Vector2(1, 1); // Dirección inicial
+        position = Vector2(7, 7); // Posición inicial
+        direction = Vector2(rand() % 3 - 1, 1);
         // Aquí podrías restar una vida si implementas un sistema de vidas
     }
     else if (!collision) {

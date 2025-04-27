@@ -15,7 +15,10 @@ public:
     }
     void AddPoints() {
         score += POINTS + multiplier;
-        multiplier + 5;
+        multiplier += 5;
+    }
+    void ResetMultiplier() {
+        multiplier = 0;
     }
     void Attempts() {
         attempts++;
