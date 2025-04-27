@@ -27,25 +27,28 @@ void GameplayScene::OnEnter()
 	objects.push_back(new Pad(Vector2(MAP_SIZE / 2, (MAP_SIZE * 3) / 4), WHITE, 1, MAP_SIZE));
 	
 	//BALL
-	objects.push_back(new Ball(Vector2(2, MAP_SIZE / 2), WHITE, objects));
+	objects.push_back(new Ball(Vector2(2, MAP_SIZE / 2), WHITE, objects, gameManager));
 }
 
 void GameplayScene::Update()
 {
 	Scene::Update();
 
+	// Verificar si se alcanzaron los intentos máximos
 	if (gameManager.attempts >= 3) {
-		
-		if (scenes["GameOver"])
+		// Validar y eliminar la escena anterior si existe
+		if (scenes["GameOver"] != nullptr) {
 			delete scenes["GameOver"];
+			scenes["GameOver"] = nullptr;
+		}
 
+		// Crear la nueva escena de Game Over
 		scenes["GameOver"] = new EndScene(rankingScene, "", gameManager.score, gameManager);
 
+		// Marcar la escena como terminada y asignar la siguiente escena
 		finished = true;
 		nextScene = "GameOver";
-
 	}
-
 }
 
 void GameplayScene::Render()

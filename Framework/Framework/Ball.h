@@ -13,12 +13,15 @@ class Ball : public GameObject {
 protected:
 	Vector2 direction;
 	std::vector<GameObject*> objects;
+	GameManager& gameManager;
 
 	Vector2 CalculateCollision(GameObject* other);
+
 public:
-	GameManager gameManager;
-	Ball(Vector2 _pos, ConsoleColor c, std::vector<GameObject*> _objects)
-		: GameObject(_pos, '@', c), objects(_objects), direction(Vector2(1, 1)) {
+
+	Ball(Vector2 _pos, ConsoleColor c, std::vector<GameObject*> _objects, GameManager& gm)
+		: GameObject(_pos, '@', c), objects(_objects), direction(Vector2(1, 1)), gameManager(gm) {
+		this->objects = objects;
 	}
 	void Update() override;
 };
