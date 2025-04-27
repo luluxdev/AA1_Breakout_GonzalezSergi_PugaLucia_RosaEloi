@@ -8,15 +8,14 @@ protected:
 	std::vector<GameObject*> objects;
 	std::string nextScene;
 	bool finished;
+
 public:
 	Scene() {
-		nextScene = "Exit"; //A scene that hasn't got a next scene set will exit the game
+		nextScene = "Exit";
 		finished = false;
 	}
 
-	virtual void OnEnter() { finished = false; } //This prevents errors when u reopen a scene,
-												 //Do not forget to include this part if you
-												 //Override this function!
+	virtual void OnEnter() { finished = false; }
 	virtual void Update() {
 		for (GameObject* o : objects) {
 			o->Update();
@@ -30,7 +29,6 @@ public:
 
 	virtual void OnExit() {}
 
-	//GETTERS
 	bool IsFinished() const { return finished; }
 	std::string GetNextScene() const { return nextScene; }
 };

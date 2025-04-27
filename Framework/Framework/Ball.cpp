@@ -1,4 +1,5 @@
 #include "Ball.h"
+#include "defines.h"
 
 Vector2 Ball::CalculateCollision(GameObject* other)
 {
@@ -20,6 +21,7 @@ Vector2 Ball::CalculateCollision(GameObject* other)
     if (vertical == 0 && horizontal == 0) {
         vertical = rand() % 2;
         horizontal = rand() % 2;
+		// If both are 0, we need to set one of them to 1 to avoid division by zero:
         if (vertical == 0 && horizontal == 0) vertical = 1;
     }
 
@@ -41,38 +43,46 @@ void Ball::Update()
     for (GameObject* go : objects) {
         if (go == this) continue;
 
-        // Colisión con paredes
+        // 1. Wall's collision:
         if (nextPos == go->GetPosition()) {
             if (Wall* w = dynamic_cast<Wall*>(go)) {
-                // Verificar si es el muro inferior (#)
-                if (go->GetPosition().y > position.y && go->GetPosition().y < 2) { // Colisión por abajo
+
+				// Chek if the wall is a bottom wall:
+                if (go->GetPosition().y > position.y && go->GetPosition().y < 2) {
                     outOfBounds = true;
                     break;
                 }
-                // Para todas las demás paredes (laterales y superior), solo rebotar
+
+				// For the other walls:
                 else {
-                    outOfBounds = false; // No se sale de los límites
-                    // Determinar si la colisión es principalmente horizontal o vertical
+                    outOfBounds = false;
+
+					// Check if the wall is a vertical wall:
                     int verify = go->GetPosition().y;
-                    bool isHorizontalCollision = (nextPos.x != position.x); // Colisión con pared lateral
-                    if (nextPos.y == 0) {
-                        direction.y = -direction.y; // Rebote vertical (techo)
+                    bool isHorizontalCollision = (nextPos.x != position.x);
+
+					// Vertical collision:
+                    if (nextPos.y == TOP) {
+                        direction.y = -direction.y;
                     }
+                    // Horizontal collision:
                     else if (isHorizontalCollision) {
-                        direction.x = -direction.x; // Rebote horizontal
+                        direction.x = -direction.x;
                     }
                     else {
+                        // Top collision:
                         if (nextPos.y < position.y) {
-                            direction.y = -direction.y; // Rebote vertical (techo)
+                            direction.y = -direction.y;
                         }
+                        // Bottom collision:
                         else if (nextPos.y > position.y) {
-                            direction.y = -direction.y; // Rebote vertical (suelo)
+                            direction.y = -direction.y;
                         }
-                        else if (nextPos.y == 0) {
+                        else if (nextPos.y == TOP) {
                             direction.y = -direction.y;
                         }
                     }
-                    if (nextPos.y == 14) {
+                    if (nextPos.y == BOTTOM) {
                         outOfBounds = true;
                     }
                     collision = true;
@@ -81,25 +91,29 @@ void Ball::Update()
             }
         }
 
-        // Colisión con ladrillos ("=")
+		// 2. Brick's collision:
         if (nextPos == go->GetPosition()) {
             if (Brick* b = dynamic_cast<Brick*>(go)) {
-                // Destruir el ladrillo
+				// Destroy the brick:
                 b->Destroy();
 
-                // Determinar dirección de rebote
+				// Define bounce direction:
                 Vector2 brickPos = b->GetPosition();
 
-                // Rebote vertical si golpeamos desde arriba/abajo
+                // Vertical bounce:
                 if (position.y != brickPos.y) {
                     direction.y = -direction.y;
                 }
-                // Rebote horizontal si golpeamos de lado
+                // Horizontal bounce:
                 else {
                     direction.x = -direction.x;
                 }
+
+				// Add points to the player:
                 gameManager.AddPoints();
                 collision = true;
+
+				// Remove the brick from the list of objects: (REF.: CHAT GPT)
                 for (auto it = objects.begin(); it != objects.end(); ++it) {
                     if (*it == go) {
                         objects.erase(it);
@@ -110,32 +124,36 @@ void Ball::Update()
             }
         }
 
-        // Colisión con el Pad (versión funcional)
+		// 3. Pad's collision:
         if (Pad* p = dynamic_cast<Pad*>(go)) {
+
             Vector2 padPos = p->GetPosition();
             int padWidth = p->GetWidth();
+
+			// Reset multiplier if the ball is in the pad's area:
             gameManager.ResetMultiplier();
 
-
+			// Check if the ball is within the pad's width:
             if (nextPos.y == padPos.y &&
                 nextPos.x >= padPos.x - padWidth &&
                 nextPos.x <= padPos.x + padWidth) {
 
-                // Rebote básico pero funcional
-                direction.y = -1; // Siempre hacia arriba
+                direction.y = -1;
 
-                // Ajuste simple de dirección X
-                if (nextPos.x < padPos.x) { // Golpe izquierda
+				// Left side hit:
+                if (nextPos.x < padPos.x) {
                     direction.x = -1;
                 }
-                else if (nextPos.x > padPos.x) { // Golpe derecha
+                // Right side hit:
+                else if (nextPos.x > padPos.x) {
                     direction.x = 1;
                 }
-                else { // Golpe centro
+                // Center hit:
+                else {
                     direction.x = 0;
                 }
 
-                // Mover la pelota fuera del área de colisión
+				// Move the ball to the pad's position:
                 position.y = padPos.y - 1;
                 position.x = nextPos.x;
 
@@ -146,13 +164,18 @@ void Ball::Update()
     }
 
     if (outOfBounds) {
+
+		// Add a life lost:
         gameManager.Attempts();
-        // Reiniciar posición de la pelota
-        position = Vector2(7, 7); // Posición inicial
+
+		// Initialize the ball's position:
+        position = Vector2(CENTER, CENTER);
+		// And the direction (rand between -1 and 1):
         direction = Vector2(rand() % 3 - 1, 1);
-        // Aquí podrías restar una vida si implementas un sistema de vidas
+
     }
     else if (!collision) {
+		// Move the ball:
         position = nextPos;
     }
 }

@@ -13,19 +13,16 @@
 int main(){
 	srand(time(NULL));
 
-	//The scenes are stored in a map
-	// KEY -> Name of the scene
-	// VALUE -> Pointer to the scene object
-	// 
-	//We store the current scene to update and render it.
-
+	//Set the console to be a fixed size:
 	std::map<std::string, Scene*> scenes;
 	Scene* currentScene;
 
+	//Create the game manager and the ranking scene:
 	RankingScene* rankingScene = new RankingScene();
 	GameManager* gameManager = new GameManager();
 
 	//Create the scenes
+	//Scenes are created with the map, the game manager and the ranking scene:
 	scenes.emplace("Menu", new MenuScene(scenes, gameManager, rankingScene));
 	scenes.emplace("Gameplay", new GameplayScene(*gameManager, scenes, rankingScene));
 	scenes.emplace("Ranking", rankingScene);

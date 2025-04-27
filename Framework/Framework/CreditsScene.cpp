@@ -1,14 +1,17 @@
 #include "CreditsScene.h"
+#include "defines.h"
 
+// Function to return the menu scene:
 void CreditsScene::Update() {
 
-	if (GetAsyncKeyState('R') != 0) {
+	if (GetAsyncKeyState(RETURN) != 0) {
 
 		nextScene = "Menu";
 		finished = true;
 	}
 }
 
+// Function to render the credits scene:
 void CreditsScene::Render() {
 
 	ConsoleSetColor(DARKYELLOW, BLACK);
@@ -24,18 +27,17 @@ void CreditsScene::Render() {
 	std::cout << std::endl;
 	std::cout << std::endl;
 
-	ConsoleSetColor(BLUE, BLACK);
+	ConsoleSetColor(MAGENTA, BLACK);
 	std::cout << "\t\tSERGI GONZALEZ!!!!" << std::endl;
 	std::cout << std::endl;
 	std::cout << std::endl;
 
-	ConsoleSetColor(GREEN, BLACK);
+	ConsoleSetColor(MAGENTA, BLACK);
 	std::cout << "\t\tELOI ROSA~~" << std::endl;
 	std::cout << std::endl;
 	std::cout << std::endl;
 
 	ConsoleSetColor(WHITE, BLACK);
 	std::cout << "\tPress R to go back..." << std::endl;
-
 
 }

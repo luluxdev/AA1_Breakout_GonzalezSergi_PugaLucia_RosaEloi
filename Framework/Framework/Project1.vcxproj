@@ -144,6 +144,7 @@
     <ClInclude Include="Brick.h" />
     <ClInclude Include="ConsoleControl.h" />
     <ClInclude Include="CreditsScene.h" />
+    <ClInclude Include="defines.h" />
     <ClInclude Include="EndScene.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
