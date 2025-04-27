@@ -22,12 +22,13 @@ int main(){
 	std::map<std::string, Scene*> scenes;
 	Scene* currentScene;
 
+	RankingScene* rankingScene = new RankingScene();
 	GameManager* gameManager = new GameManager();
 
 	//Create the scenes
 	scenes.emplace("Menu", new MenuScene());
 	scenes.emplace("Gameplay", new GameplayScene());
-	scenes.emplace("Ranking", new RankingScene());
+	scenes.emplace("Ranking", rankingScene);
 	scenes.emplace("Credits", new CreditsScene());
 
 	//Select the starting scene, in this case, the main menu
