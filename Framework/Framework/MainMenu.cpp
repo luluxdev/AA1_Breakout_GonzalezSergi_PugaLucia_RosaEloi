@@ -29,7 +29,6 @@ void Title_printer() {
 	ConsoleSetColor(DARKYELLOW, BLACK);
 	std::cout << ".-. .-')  _  .-')     ('-.   ('-.    .-. .-')                            .-') _    " << std::endl;
 	std::cout << "\\  ( OO )( \\( -O )  _(  OO) ( OO ).-.\\  ( OO )                          (  OO) )   " << std::endl;
-	ConsoleSetColor(MAGENTA, BLACK);
 	std::cout << " ;-----.\\ ,------. (,------./ . --. /,--. ,--.  .-'),-----.  ,--. ,--.  /     '._  " << std::endl;
 	std::cout << " | .-.  | |   /`. ' |  .---'| \\-.  \\ |  .'   / ( OO'  .-.  ' |  | |  |  |'--...__) " << std::endl;
 	std::cout << " | '-' /_)|  /  | | |  |  .-'-'  |  ||      /, /   |  | |  | |  | | .-')'--.  .--' " << std::endl;
@@ -37,16 +36,28 @@ void Title_printer() {
 	std::cout << " | |  \\  ||  .  '.' |  .--' |  .-.  ||  .   \\    \\ |  | |  | |  | | `-' /  |  |    " << std::endl;
 	std::cout << " | '--'  /|  |\\  \\  |  `---.|  | |  ||  |\\   \\    `'  '-'  '('  '-'(_.-'   |  |    " << std::endl;
 	std::cout << " `------' `--' '--' `------'`--' `--'`--' '--'      `-----'   `-----'      `--'    " << std::endl;
-	ConsoleSetColor(WHITE, BLACK);
+	ConsoleSetColor(BLUE, BLACK);
 }
 
 
 void MenuScene::Render()
 {
 	Title_printer();
-	std::cout << "MENU:" << std::endl;
-	std::cout << "1.Ranking" << std::endl;
-	std::cout << "2.Game" << std::endl;
-	std::cout << "3.Credits" << std::endl;
+	std::cout << "\n\tMENU:" << std::endl;
+
+	ConsoleSetColor(DARKYELLOW, BLACK);
+	std::cout << "\t1.";
+	ConsoleSetColor(BLUE, BLACK);
+	std::cout << "Ranking" << std::endl;
+
+	ConsoleSetColor(DARKYELLOW, BLACK);
+	std::cout << "\t2.";
+	ConsoleSetColor(BLUE, BLACK);
+	std::cout << "Game" << std::endl;
+
+	ConsoleSetColor(DARKYELLOW, BLACK);
+	std::cout << "\t3.";
+	ConsoleSetColor(BLUE, BLACK);
+	std::cout << "Credits" << std::endl;
 
 }
