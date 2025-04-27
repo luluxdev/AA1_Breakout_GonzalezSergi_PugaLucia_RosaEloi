@@ -7,6 +7,7 @@
 #include "MenuScene.h"
 #include "GameplayScene.h"
 #include "RankingScene.h"
+#include "CreditsScene.h"
 #include <map>
 
 int main(){
@@ -21,10 +22,13 @@ int main(){
 	std::map<std::string, Scene*> scenes;
 	Scene* currentScene;
 
+	GameManager* gameManager = new GameManager();
+
 	//Create the scenes
 	scenes.emplace("Menu", new MenuScene());
 	scenes.emplace("Gameplay", new GameplayScene());
 	scenes.emplace("Ranking", new RankingScene());
+	scenes.emplace("Credits", new CreditsScene());
 
 	//Select the starting scene, in this case, the main menu
 	currentScene = scenes["Menu"];

@@ -12,7 +12,7 @@ void MenuScene::Update()
 
 	}
 	else if (GetAsyncKeyState('3') != 0) {
-		nextScene = "Exit";
+		nextScene = "Credits";
 		finished = true;
 	}
 	else {
