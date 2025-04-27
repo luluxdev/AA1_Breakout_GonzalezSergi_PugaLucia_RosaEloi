@@ -92,5 +92,8 @@
     <ClInclude Include="Wall.h">
       <Filter>Header Files\Objects\Gameplay</Filter>
     </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>Header Files\Objects\Gameplay</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,37 +1,36 @@
 #include "Ball.h"
 
-Vector2 Ball::CalculateCollision( GameObject* other)
+Vector2 Ball::CalculateCollision(GameObject* other)
 {
-	int vertical = 0;
-	int horizontal = 0;
+    int vertical = 0;
+    int horizontal = 0;
 
-	for ( int i=0;i < objects.size();i++) {
-		//Check verticals
-		bool top = (other->GetPosition() + Vector2(0, -1)) == objects[i]->GetPosition();
-		bool bottom = (other->GetPosition() + Vector2(0, 1)) == objects[i]->GetPosition();
-		vertical += (int)top + (int)bottom;
+    for (int i = 0; i < objects.size(); i++) {
+        bool top = (other->GetPosition() + Vector2(0, -1)) == objects[i]->GetPosition();
+        bool bottom = (other->GetPosition() + Vector2(0, 1)) == objects[i]->GetPosition();
+        vertical += (int)top + (int)bottom;
 
-		//Check horizontals
-		bool left = (other->GetPosition() + Vector2(-1, 0)) == objects[i]->GetPosition();
-		bool right = (other->GetPosition() + Vector2(1, 0)) == objects[i]->GetPosition();
-		horizontal += (int)left + (int)right;
-	}
+        bool left = (other->GetPosition() + Vector2(-1, 0)) == objects[i]->GetPosition();
+        bool right = (other->GetPosition() + Vector2(1, 0)) == objects[i]->GetPosition();
+        horizontal += (int)left + (int)right;
+    }
 
-	Vector2 outDir = direction;
+    Vector2 outDir = direction;
 
-	//isolated
-	if (vertical == 0 && horizontal == 0) {
-		vertical = rand() % 2 > 0;
-		horizontal = rand() % 2 > 0;
-	}
+    if (vertical == 0 && horizontal == 0) {
+        vertical = rand() % 2;
+        horizontal = rand() % 2;
+        if (vertical == 0 && horizontal == 0) vertical = 1;
+    }
 
-	if (vertical >= horizontal)
-		outDir.x = -outDir.x;
-	if (horizontal > vertical)
-		outDir.y = -outDir.y;
+    if (vertical >= horizontal)
+        outDir.x = -outDir.x;
+    if (horizontal > vertical)
+        outDir.y = -outDir.y;
 
-	return outDir;
+    return outDir;
 }
+
 
 void Ball::Update()
 {
@@ -76,13 +75,6 @@ void Ball::Update()
                 }
                 gameManager.AddPoints();
                 collision = true;
-
-                for (auto it = objects.begin(); it != objects.end(); ++it) {
-                    if (*it == go) {
-                        objects.erase(it);
-                        break;
-                    }
-                }
                 break;
             }
         }
